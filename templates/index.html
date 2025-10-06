@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}学習記録 - StudyTime{% endblock %}
+{% block content %}
+
+  <div class="d-flex align-items-center mb-3">
+    <h1 class="h3 mb-0 me-3">学習記録</h1>
+    <a class="btn btn-sm btn-primary" href="{{ url_for('add') }}">＋ 新規追加</a>
+  </div>
+
+  <form method="POST" class="row g-3 mb-4">
+  <div class="col-auto">
+    <label class="form-label">開始日</label>
+    <input type="date" name="start_date" value="{{ start_date.strftime('%Y-%m-%d') }}" class="form-control">
+  </div>
+  <div class="col-auto">
+    <label class="form-label">終了日</label>
+    <input type="date" name="end_date" value="{{ end_date.strftime('%Y-%m-%d') }}" class="form-control">
+  </div>
+  <div class="col-auto align-self-end">
+    <button type="submit" class="btn btn-primary">期間で絞り込み</button>
+  </div>
+</form>
+
+
+  <p class="text-muted">合計学習時間: <strong>{{ total }}</strong> 分</p>
+
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>日付</th>
+          <th>科目</th>
+          <th>時間(分)</th>
+          <th style="width:160px;">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if records %}
+          {% for r in records %}
+            <tr>
+              <td>{{ r.studied_at }}</td>
+              <td>{{ r.subject }}</td>
+              <td>{{ r.time }}</td>
+              <td>
+                <a class="btn btn-sm btn-outline-primary me-2" href="{{ url_for('edit', id=r.id) }}">編集</a>
+                <a class="btn btn-sm btn-outline-danger" href="{{ url_for('delete', id=r.id) }}">削除</a>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr><td colspan="4" class="text-center text-muted">まだ記録がありません</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+    <h2 class="h5 mt-4">科目ごとの合計時間</h2>
+    <ul class="list-group">
+        {% for subject, total_time in subject_totals %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ subject }}
+                <span class="badge bg-primary rounded-pill">{{ total_time }} 分</span>
+            </li>
+        {% else %}
+            <li class="list-group-item text-muted">まだ記録がありません</li>
+        {% endfor %}
+    </ul>
+  </div>
+
+
+
+  <!-- グラフ -->
+  <div class="card mt-4">
+    <div class="card-body">
+      <h2 class="h5 mb-3">直近7日の日別学習時間</h2>
+      <canvas id="weekly" height="120"></canvas>
+    </div>
+  </div>
+
+  <!-- Chart.js（末尾に配置） -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    const ctx = document.getElementById('weekly');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: {{ labels | tojson }},
+        datasets: [{ label: '日別学習時間(分)', data: {{ values | tojson }} }]
+      }
+    });
+  </script>
+
+{% endblock %}
