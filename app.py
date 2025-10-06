@@ -4,11 +4,6 @@ from datetime import datetime, date, timedelta
 import collections
 from sqlalchemy import func
 
-# SQLiteのデータベースを設定（SQLiteファイルのパスを指定）
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///studytime.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///study.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -41,12 +36,12 @@ def index():
         end_str = request.form.get("end_date")
         if start_str:
             try:
-                start_date = datetime.strptime(start_str, "%Y-%m-%d").date()
+                start_date = datetime.strptime(start_str, "%Y-%m-%d").date() 
             except ValueError:
                 pass  # 入力が不正なら無視
         if end_str:
             try:
-                end_date = datetime.strptime(end_str, "%Y-%m-%d").date()
+                end_date = datetime.strptime(end_str, "%Y-%m-%d").date() 
             except ValueError:
                 pass
 
