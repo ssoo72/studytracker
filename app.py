@@ -115,5 +115,5 @@ def about():
     return render_template("about.html")
 
 if __name__ == "__main__":
-    # 二重実行防止のために use_reloader=False を付ける
-    app.run(debug=True, use_reloader=False)
+    # 二重実行防止のために use_reloader=False を付ける # ポート指定を追加
+    app.run(debug=True, host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), use_reloader=False)
