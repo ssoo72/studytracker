@@ -41,4 +41,22 @@ Study Trackerは、学習時間を記録し、科目ごとの合計や期間別�
 ---
 
 ## ディレクトリ構成
+studytracker/
+├── app.py # Flaskメインアプリ
+├── instance/
+│ └── study.db # SQLiteデータベース
+├── templates/
+│ ├── base.html
+│ ├── index.html
+│ ├── add.html
+│ ├── edit.html
+│ ├── about.html
+├── static/
+│ ├── style.css
+│ └── chart.js
+├── requirements.txt
+├── runtime.txt
+├── Procfile
+└── README.md
+
 
