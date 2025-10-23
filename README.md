@@ -1,8 +1,7 @@
 # 📘 Study Tracker  
 日々の学習内容を記録・可視化できるアプリケーション  
 
-🎯 **デモサイト（Render）**：  
-[https://studytracker.onrender.com](https://studytracker.onrender.com)
+🎯 **デモサイト（Render）**：  [https://studytracker.onrender.com](https://studytracker.onrender.com)
 
 ---
 
@@ -62,6 +61,7 @@ studytracker/
 ```
 
 ---
+
 
 
 
